@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portfolio Landing Page</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+            background-color: #e9d2f7;
+        }
+
+        nav a {
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            background: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        img {
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>My Portfolio</h1>
+
+<nav>
+    <a href="#profile">Profile</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#lab">Lab</a>
+    <a href="#exam">Exam</a>
+</nav>
+
+<!-- PROFILE -->
+<section id="profile">
+    <h3>Student Profile</h3>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <td colspan="2" align="center">
+                <img src="images/king.jpg" width="150">
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>King Daniel B. Javar</td>
+        </tr>
+        <tr>
+            <td>Student Number</td>
+            <td>251101176</td>
+        </tr>
+        <tr>
+            <td>Course & Section</td>
+            <td>BSCS 1C</td>
+        </tr>
+    </table>
+
+    <h4>Hobbies</h4>
+    <ol>
+        <li>Likes to draw</li>
+        <li>Plays Genshin Impact</li>
+    </ol>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+    <h3>Dashboard</h3>
+    <p>Here are my works</p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+    <h3>Quiz Outputs</h3>
+
+    <p>Quiz 1</p>
+    <img src="images/q1.jpg" width="250"><br><br>
+
+    <p>Quiz 2</p>
+    <img src="images/q2.jpg" width="250"><br><br>
+
+    <p>Quiz 3</p>
+    <img src="images/q3.jpg" width="250"><br><br>
+</section>
+
+<!-- LAB -->
+<section id="lab">
+    <h3>Lab Work</h3>
+
+    <form id="labForm">
+        <label>Title/Description:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label>Upload File:</label><br>
+        <input type="file" name="file" required><br><br>
+
+        <button type="submit">Submit Lab Work</button>
+    </form>
+
+    <div id="labOutput"></div>
+</section>
+
+<!-- EXAM -->
+<section id="exam">
+    <h3>Major Exam</h3>
+
+    <form id="examForm">
+        <label>Title/Description:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label>Upload File:</label><br>
+        <input type="file" name="file" required><br><br>
+
+        <button type="submit">Submit Exam</button>
+    </form>
+
+    <div id="examOutput"></div>
+</section>
+
+<hr>
+<p align="center">© 2026 My Portfolio</p>
+
+<!-- JAVASCRIPT -->
+<script>
+function handleUpload(formId, outputId) {
+    const form = document.getElementById(formId);
+    const output = document.getElementById(outputId);
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const title = form.querySelector("input[name='title']").value;
+        const fileInput = form.querySelector("input[type='file']");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("Please select a file!");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const container = document.createElement("div");
+            container.style.marginBottom = "15px";
+
+            const text = document.createElement("p");
+            text.textContent = title;
+            container.appendChild(text);
+
+            if (file.type.startsWith("image/")) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.width = 200;
+                container.appendChild(img);
+            } else {
+                const fileName = document.createElement("p");
+                fileName.textContent = "Uploaded: " + file.name;
+                container.appendChild(fileName);
+            }
+
+            output.appendChild(container);
+        };
+
+        reader.readAsDataURL(file);
+        form.reset();
+    });
+}
+
+handleUpload("labForm", "labOutput");
+handleUpload("examForm", "examOutput");
+</script>
+
+</body>
+</html>
